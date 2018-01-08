@@ -44,6 +44,14 @@ def read_files_from(path):
             images.append(os.path.join(dirname, file))
     return images
 
+def write_report(analyzed_images):
+    ''' Write to one file the absolute path of the images that contains faces '''
+    with open(RESULT_FILE, 'w') as f:
+        for face in analyzed_images:
+            f.write(face + "\n")
+    f.close()
+    print("\n[+] Write report to {}".format(RESULT_FILE))
+
 
 if __name__ == "__main__":
     print(BANNER)
@@ -74,8 +82,4 @@ if __name__ == "__main__":
         print("[+] Analyzed {} images of {} | Found {} faces".format(ANALYZED_IMGS, len(IMGS), len(FOUND_FACES)), end="\r")
 
     # write result to file
-    with open(RESULT_FILE, 'w') as f:
-        for face in FOUND_FACES:
-            f.write(face + "\n")
-    f.close()
-    print("\n[+] Write report to {}".format(RESULT_FILE))
+    write_report(ANALYZED_IMGS)
