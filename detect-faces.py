@@ -3,6 +3,8 @@ import sys
 import os
 import cv2
 
+from timeit import default_timer as timer
+
 
 BANNER = """   
    __                     _      _            _             
@@ -70,6 +72,9 @@ if __name__ == "__main__":
 
     CL = create_classifier()
 
+    # start now
+    START = timer()
+    # Store here the absolute path of the images that contains faces
     FOUND_FACES = []
     ANALYZED_IMGS = 0
     for image in IMGS:
@@ -79,7 +84,12 @@ if __name__ == "__main__":
         # Check image
         if detect_face(gray_img, CL):
             FOUND_FACES.append(image)
-        print("[+] Analyzed {} images of {} | Found {} faces".format(ANALYZED_IMGS, len(IMGS), len(FOUND_FACES)), end="\r")
+        print("[+] Analyzed {} images of {} | Found {} faces"
+              .format(ANALYZED_IMGS, len(IMGS), len(FOUND_FACES)), end="\r")
 
     # write result to file
-    write_report(ANALYZED_IMGS)
+    write_report(FOUND_FACES)
+
+    # show time elapsed
+    ELAPSED = timer() - START
+    print("[+] Finished in {} seconds".format(round(ELAPSED)))
