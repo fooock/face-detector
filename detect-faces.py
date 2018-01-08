@@ -63,11 +63,18 @@ if __name__ == "__main__":
     if NUM_ARGS == 0:
         print("First argument need to be the directory where the pictures are")
         sys.exit()
+
+    # check if the given directory exists
+    PATH = sys.argv[1]
+    if not os.path.exists(PATH):
+        print("[+] The given directory does not exists")
+        sys.exit()
+
     # Check if exists images in the given directory
-    IMGS = read_files_from(sys.argv[1])
+    IMGS = read_files_from(PATH)
     NUM_IMGS = len(IMGS)
     if NUM_IMGS == 0:
-        print("No images found!")
+        print("[+] No images found!")
         sys.exit()
 
     CL = create_classifier()
